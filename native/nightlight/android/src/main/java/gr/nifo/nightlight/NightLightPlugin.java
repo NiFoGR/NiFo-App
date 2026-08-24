@@ -150,7 +150,7 @@ public class NightLightPlugin extends Plugin {
         if (call.hasOption("dayKelvin")) c.dayKelvin = Curve.clampKelvin(call.getInt("dayKelvin", c.dayKelvin));
         if (call.hasOption("nightKelvin")) c.nightKelvin = Curve.clampKelvin(call.getInt("nightKelvin", c.nightKelvin));
         if (call.hasOption("transitionMin")) c.transitionMin = Math.max(1, Math.min(240, call.getInt("transitionMin", c.transitionMin)));
-        if (call.hasOption("intensity")) c.intensity = (float) Math.max(0, Math.min(1, call.getDouble("intensity", c.intensity)));
+        if (call.hasOption("intensity")) c.intensity = (float) Math.max(0, Math.min(1, call.getDouble("intensity", (double) c.intensity)));
 
         int step = Math.max(5, Math.min(60, call.getInt("step", 15)));
         JSArray out = new JSArray();
