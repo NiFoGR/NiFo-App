@@ -163,19 +163,25 @@ www/               the entire app, plain ES modules, no build
     ui.js          formatting, haptics, notifications, SVG charts
     icons.js       the inline SVG icon set
     native.js      real Android alarms via Capacitor
+    nightlight.js  the night light bridge, settings and browser fallback
     kegels/        the Kegels feature
     pe/            the PE feature
     bible/         the Bible feature and reader
     pray/          the prayer rule, part of the Bible section
+    breathe/       the wind-down
   bible/           the scripture itself, one JSON file per book, generated
   sw.js            offline service worker
+native/
+  nightlight/      Capacitor plugin: the system-wide blue-light filter
 signing/           the fixed APK key, so updates install over the top
 tools/             icon generation, signing patch, dev server, data extraction
 docs/
   CODEMAP.md       where every file is and what it does
   KEGEL_PROGRAM.md the kegel protocol and where it comes from
   PE_PROGRAM.md    PE limits, projection maths and sources
-  BIBLE.md         the parser, what it recovers, and why no scripture is shipped
+  BIBLE.md         the parser, what it recovers, and why the text is bundled
+  WINDDOWN.md      the physiology, and why the screen goes black not off
+  NIGHTLIGHT.md    why the schedule is native, and the two filters
   BRAINSTORM.md    feature design notes and the backlog
 ```
 
@@ -185,7 +191,7 @@ lives.
 
 ## Adding the next feature
 
-`FEATURES` in `www/js/app.js` is the registry the section tiles render from, and `todayTasks()` builds the Today list. A new feature is an entry in both, plus a module that renders into `#app` and a route in `ROUTES`. Keep the store schema additive, `hydrate()` in `store.js` merges saved state over the blank shape, so new fields appear on old saves instead of coming back `undefined`.
+`FEATURES` in `www/js/hub.js` is the registry the section tiles render from, and `todayTasks()` beside it builds the Today list. A new feature is an entry in both, plus a module that renders into `#app` and a route in `ROUTES`. Keep the store schema additive, `hydrate()` in `store.js` merges saved state over the blank shape, so new fields appear on old saves instead of coming back `undefined`.
 
 ---
 
