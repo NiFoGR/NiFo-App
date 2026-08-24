@@ -10,9 +10,11 @@ Runs entirely on the phone. No account, no server, no analytics, nothing leaves 
 
 **Feature 3 - Bible:** the whole Orthodox canon read straight through, Genesis 1 to Revelation 22, parsed from a copy of the Orthodox Study Bible and bundled with the app. A screen for every book saying what it is before you open it, a record of everything you have read, and the morning and night prayer rule, which lives in the same section because it is the same practice.
 
-The home screen is a **Today** list: what is outstanding across all three features, and one button for the most urgent thing.
+**Feature 4 - Wind-down:** five minutes of paced breathing as the last thing in the day, done lying down with the phone on your chest. A long exhale at around six breaths a minute, opened with three physiological sighs, paced by a tone that rises and falls with the breath and by vibration you can feel through a shirt. No score and nothing to beat, because it is the last thing before sleep. [`docs/WINDDOWN.md`](docs/WINDDOWN.md).
 
-Each section has its own palette. Kegels is teal on cool graphite, PE violet on deep plum, Bible the deep red of a Gospel book with a serif face. One skeleton, three rooms.
+The home screen is a **Today** list: what is outstanding across all four features, and one button for the most urgent thing.
+
+Each section has its own palette. Kegels is teal on cool graphite, PE violet on deep plum, Bible the deep red of a Gospel book with a serif face, Wind-down indigo on near-black because it is used in an unlit room. One skeleton, four rooms.
 
 ---
 

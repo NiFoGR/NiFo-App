@@ -10,7 +10,7 @@
 //   settings.js       app-wide settings
 //   lock.js           the optional PIN gate
 //   names.js          what each section is called
-//   kegels/ pe/ bible/ one folder per feature (pray/ is part of bible/)
+//   kegels/ pe/ bible/ breathe/ one folder per feature (pray/ is part of bible/)
 //
 // docs/CODEMAP.md has the full map.
 
@@ -39,6 +39,9 @@ import { renderRead } from './bible/read.js';
 import { renderBookContext } from './bible/book.js';
 import { renderBibleTracking } from './bible/tracking.js';
 import * as bibleProgram from './bible/program.js';
+import { renderBreatheHome, renderBreatheSettings } from './breathe/home.js';
+import { startBreathe } from './breathe/session.js';
+import * as breatheProgram from './breathe/program.js';
 import { renderHub } from './hub.js';
 import { renderSettings } from './settings.js';
 import { lockActive, renderLock, relock } from './lock.js';
@@ -81,6 +84,13 @@ function runRule(params) {
   });
 }
 
+function runBreathe() {
+  activeSession = startBreathe(app, () => {
+    activeSession = null;
+    navigate('#/breathe');
+  });
+}
+
 /* ---------------- router ---------------- */
 
 const ROUTES = {
@@ -110,6 +120,9 @@ const ROUTES = {
   '#/bible/settings': () => renderBibleSettings(app),
   '#/bible/pray': (params) => runRule(params),
   '#/bible/prayers': () => renderMyPrayers(app),
+  '#/breathe': () => renderBreatheHome(app),
+  '#/breathe/run': () => runBreathe(),
+  '#/breathe/settings': () => renderBreatheSettings(app),
 };
 
 const NAV = {
@@ -121,6 +134,7 @@ const NAV = {
   bible: '#/bible', 'bible-books': '#/bible/books',
   'bible-track': '#/bible/track', 'bible-settings': '#/bible/settings',
   'bible-prayers': '#/bible/prayers',
+  breathe: '#/breathe', 'breathe-settings': '#/breathe/settings',
 };
 
 let lastHash = '';
@@ -142,6 +156,7 @@ function route() {
   // everywhere; only the palette and, for prayer, the type change.
   document.body.dataset.section = path.startsWith('#/pe') ? 'pe'
     : path.startsWith('#/bible') ? 'bible'
+    : path.startsWith('#/breathe') ? 'breathe'
     : ['#/kegels', '#/kegels/settings', '#/session', '#/track', '#/guide', '#/roadmap', '#/review', '#/pocket', '#/tutorial'].includes(path) ? 'kegels'
     : 'hub';
   const fn = ROUTES[path] || (() => renderHub(app));
@@ -159,7 +174,7 @@ document.addEventListener('click', (e) => {
 // Screens that start running the moment you arrive. Leaving one replaces it
 // instead of stacking on top, so Back cannot walk into a session you have just
 // finished and set it going again.
-const EPHEMERAL = ['#/session', '#/bible/pray', '#/pe/timer', '#/pe/measure', '#/pocket'];
+const EPHEMERAL = ['#/session', '#/bible/pray', '#/pe/timer', '#/pe/measure', '#/pocket', '#/breathe/run'];
 
 // Today is the default screen, settled before back.js takes its bearings below.
 // replaceState rather than assignment: landing on the app should not leave a
@@ -203,6 +218,7 @@ route();
 // when the times are edited.
 prayProgram.syncAlarms();
 bibleProgram.syncAlarm();
+breatheProgram.syncAlarm();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));
