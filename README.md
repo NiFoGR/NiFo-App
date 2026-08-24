@@ -18,24 +18,25 @@ Each section has its own palette. Kegels is teal on cool graphite, PE violet on 
 
 ## Getting it on your phone
 
-Two ways. The first takes about thirty seconds.
+Build the APK and sideload it.
 
-### Option A, install it as an app from the browser (fastest)
+### Why there is no web install
 
-The app is a PWA, so Chrome on Android will install it to your home screen with its own icon, its own window (no browser bar) and full offline support. It behaves like any other installed app.
+There used to be a second route: GitHub Pages served `www/`, and Chrome on
+Android installed it as a PWA. That is gone, and it must stay gone.
 
-1. Turn Pages on once: **Settings → Pages → Source: GitHub Actions**. (The
-   workflow cannot do this for you, its token is not allowed to create a Pages
-   site, so the deploy fails until this is ticked.)
-2. Re-run **Actions → Deploy to GitHub Pages**, or push anything to `main`. It
-   publishes to `https://nifogr.github.io/NiFo-App/`.
-3. Open that link in **Chrome on your phone** → menu (⋮) → **Add to Home screen** / **Install app**.
+`www/bible/` now holds the full text of the Orthodox Study Bible. Shipping that
+inside an APK you install on your own phone is a personal copy of a book you
+own. Publishing it to a website is redistributing a commercial translation, and
+**GitHub Pages is public even when the repository is private** — private Pages
+needs an Enterprise plan. So the deploy workflow has been deleted rather than
+merely disabled, because a disabled workflow is one click away from being a
+copyright problem. [`docs/BIBLE.md`](docs/BIBLE.md) explains the line in full.
 
-That is a real installed app: it opens fullscreen, works with no signal, and keeps your data between launches.
+If Pages was ever switched on for this repository, turn it off in
+**Settings → Pages → Source: None**.
 
-### Option B, build an actual APK
-
-If you want a genuine `.apk` file to sideload:
+### Build an actual APK
 
 1. Go to the **Actions** tab → **Build Android APK** → **Run workflow**.
 2. When it finishes (~4 minutes), open the run and download the **`nifo-apk`** artifact.
