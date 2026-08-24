@@ -212,3 +212,4 @@ async function photoCount() {
     return 0;
   }
 }
+
