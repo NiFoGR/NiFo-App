@@ -43,6 +43,7 @@ import { renderBreatheHome, renderBreatheSettings } from './breathe/home.js';
 import { startBreathe } from './breathe/session.js';
 import * as breatheProgram from './breathe/program.js';
 import { renderHub } from './hub.js';
+import * as nightlight from './nightlight.js';
 import { renderSettings } from './settings.js';
 import { lockActive, renderLock, relock } from './lock.js';
 import { initBack, navigate, replaceWith } from './back.js';
@@ -123,6 +124,7 @@ const ROUTES = {
   '#/breathe': () => renderBreatheHome(app),
   '#/breathe/run': () => runBreathe(),
   '#/breathe/settings': () => renderBreatheSettings(app),
+  '#/settings/night': () => nightlight.renderNightlightSettings(app),
 };
 
 const NAV = {
@@ -135,6 +137,7 @@ const NAV = {
   'bible-track': '#/bible/track', 'bible-settings': '#/bible/settings',
   'bible-prayers': '#/bible/prayers',
   breathe: '#/breathe', 'breathe-settings': '#/breathe/settings',
+  nightlight: '#/settings/night',
 };
 
 let lastHash = '';
@@ -159,6 +162,11 @@ function route() {
     : path.startsWith('#/breathe') ? 'breathe'
     : ['#/kegels', '#/kegels/settings', '#/session', '#/track', '#/guide', '#/roadmap', '#/review', '#/pocket', '#/tutorial'].includes(path) ? 'kegels'
     : 'hub';
+  // The progress gallery and the monthly check-in's camera are the two screens
+  // where a colour cast is not cosmetic: it would make a photo look like
+  // progress, or hide it. The night light stands down for both.
+  nightlight.suspend(path.startsWith('#/pe/gallery') || path.startsWith('#/pe/measure'));
+
   const fn = ROUTES[path] || (() => renderHub(app));
   fn(new URLSearchParams(query || ''));
   if (path !== '#/session') window.scrollTo(0, 0);
@@ -219,6 +227,11 @@ route();
 prayProgram.syncAlarms();
 bibleProgram.syncAlarm();
 breatheProgram.syncAlarm();
+
+// The night light is the same story: the APK's filter service keeps its own
+// copy of the schedule, and this is what puts the two back in step after a
+// reinstall or a restored backup.
+nightlight.init();
 
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => navigator.serviceWorker.register('./sw.js').catch(() => {}));

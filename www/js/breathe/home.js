@@ -7,7 +7,7 @@
 
 import * as store from '../store.js';
 import * as breathe from './program.js';
-import { escapeHtml, fmtClock, fmtHours, segmented, onSegment, toast } from '../ui.js';
+import { escapeHtml, fmtClock, fmtDuration, fmtHours, segmented, onSegment, toast } from '../ui.js';
 import { icon } from '../icons.js';
 
 export function renderBreatheHome(mount) {
@@ -34,7 +34,7 @@ export function renderBreatheHome(mount) {
         <div class="today-left">
           <h2>${today.done ? 'Done tonight' : 'Not yet tonight'}</h2>
           <p class="muted small">${today.done
-            ? `${fmtClock(today.ms)} at ${new Date(today.at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}`
+            ? `${fmtDuration(today.ms / 1000)} at ${new Date(today.at).toLocaleTimeString(undefined, { hour: '2-digit', minute: '2-digit' })}`
             : `${escapeHtml(plan.pattern.short)} · ${fmtClock(plan.totalMs)}`}${st ? ` · ${st} night${st === 1 ? '' : 's'}` : ''}</p>
         </div>
         <div class="br-mark ${today.done ? 'on' : ''}">${icon(today.done ? 'check' : 'breath', 26)}</div>
@@ -51,7 +51,7 @@ export function renderBreatheHome(mount) {
       <section class="card">
         <div class="h-row">${icon('calendar', 16)}<h2>Last 13 weeks</h2></div>
         <div class="heatmap">
-          ${cols.map((c) => `<div class="hm-col">${c.map((d) => `<i class="${d.cls}" title="${d.key}${d.ms ? `: ${fmtClock(d.ms)}` : ''}"></i>`).join('')}</div>`).join('')}
+          ${cols.map((c) => `<div class="hm-col">${c.map((d) => `<i class="${d.cls}" title="${d.key}${d.ms ? `: ${fmtDuration(d.ms / 1000)}` : ''}"></i>`).join('')}</div>`).join('')}
         </div>
         <div class="hm-key">
           <span>less</span><i class="none"></i><i class="l1"></i><i class="l2"></i><i class="l3"></i><i class="l4"></i><span>more</span>

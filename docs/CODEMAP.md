@@ -28,15 +28,16 @@ does. Long files are split by `/* ---- section ---- */` banners, so
 
 | File | Lines | What it is |
 |---|---|---|
-| `js/app.js` | 225 | Route table, shell state, boot. Nothing renders here. |
+| `js/app.js` | 238 | Route table, shell state, boot. Nothing renders here. |
 | `js/back.js` | 213 | What Back means: the corner arrow, the hardware button, history. |
 | `js/hub.js` | 324 | The Today screen, the feature registry, the install prompt. |
 | `js/icons.js` | 82 | The inline SVG icon set and the logo mark. |
 | `js/lock.js` | 70 | The optional PIN gate. Owns whether the app is unlocked. |
 | `js/names.js` | 10 | What each section is called, under discreet mode. |
 | `js/native.js` | 66 | Capacitor bridge for real Android alarms. |
-| `js/settings.js` | 206 | App-wide settings: feedback, privacy, data, reset. |
-| `js/store.js` | 628 | localStorage persistence and the input sanitiser. |
+| `js/nightlight.js` | 451 | The night light: the bridge, its settings screen, the browser fallback. |
+| `js/settings.js` | 215 | App-wide settings: feedback, privacy, data, reset. |
+| `js/store.js` | 661 | localStorage persistence and the input sanitiser. |
 | `js/ui.js` | 376 | Shared helpers: formatting, haptics, notifications, SVG charts. |
 
 ## Kegels
@@ -97,11 +98,28 @@ that legitimate; [`docs/BIBLE.md`](BIBLE.md) explains the line and what would
 have to change if that ever stopped being true. `parse.js` stays in the app
 unused at runtime, in case it does.
 
+## Native
+
+| File | What it is |
+|---|---|
+| `native/nightlight/` | A Capacitor plugin: the system-wide blue-light filter. |
+| `  Curve.java` | Colour temperature and the schedule. Pure, so it can be run on a desktop JVM. |
+| `  OverlayService.java` | The foreground service that owns the schedule and repaints. |
+| `  HardwareTint.java` | Android's own Night Light, driven directly where the permission allows. |
+| `  NightLightPlugin.java` | The bridge. Configuration in, status out, nothing else. |
+| `  BootReceiver.java` | Puts the filter back after a reboot. |
+
+This is a plugin package rather than a script that patches the generated
+project, because `android/` is regenerated on every build and would throw such
+edits away. `package.json` pulls it in with a `file:` dependency and Capacitor
+does the rest. [`docs/NIGHTLIGHT.md`](NIGHTLIGHT.md) explains why the schedule
+lives in Java, and why there are two filters rather than one.
+
 ## Wind-down
 
 | File | Lines | What it is |
 |---|---|---|
-| `js/breathe/program.js` | 200 | The patterns, the timeline, the nightly record and the streak. |
+| `js/breathe/program.js` | 203 | The patterns, the timeline, the nightly record and the streak. |
 | `js/breathe/session.js` | 309 | The five minutes: the audio timeline, the buzzes, the orb. |
 | `js/breathe/home.js` | 185 | Section home, the record, and wind-down settings. |
 

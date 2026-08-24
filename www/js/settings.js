@@ -41,6 +41,7 @@ function settingsNav() {
 export function renderSettings(mount) {
   const s = store.get().settings;
   const pe = store.get().pe.settings;
+  const nl = store.get().nightlight;
 
   mount.innerHTML = `
     <div class="screen">
@@ -69,6 +70,14 @@ export function renderSettings(mount) {
           <span><b>Discreet mode</b><i>Renames Kegels to "Core Training" and PE to "Length Training".</i></span>
           <input type="checkbox" id="discreet" ${s.discreet ? 'checked' : ''}>
         </label>
+      </section>
+
+      <section class="card">
+        <div class="h-row">${icon('warmth', 16)}<h2>Night light</h2></div>
+        <p class="small muted">${nl.enabled
+          ? `Warming from ${escapeHtml(nl.wakeAt)} to ${nl.nightKelvin}K by ${escapeHtml(nl.sleepAt)}.`
+          : 'Off. Takes the blue out of the screen as the evening goes on.'}</p>
+        <a class="btn ghost wide linkbtn" href="#/settings/night">${nl.enabled ? 'Adjust' : 'Set it up'}</a>
       </section>
 
       <section class="card">

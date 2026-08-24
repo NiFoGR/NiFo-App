@@ -20,6 +20,7 @@ const ASSETS = [
   './js/ui.js',
   './js/icons.js',
   './js/native.js',
+  './js/nightlight.js',
 
   // kegels
   './js/kegels/program.js',

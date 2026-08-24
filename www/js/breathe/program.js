@@ -50,7 +50,10 @@ export const PATTERNS = {
   },
 };
 
-export const PATTERN_IDS = Object.keys(PATTERNS);
+// Listed rather than taken from Object.keys: '478' is an integer-like key, so
+// JavaScript enumerates it before every string key and the picker came out
+// offering 4-7-8 first, which is the one pattern that does not suit everybody.
+export const PATTERN_IDS = ['exhale', 'coherent', '478'];
 
 export const MIN_MINUTES = 3;
 export const MAX_MINUTES = 20;

@@ -12,6 +12,8 @@ Runs entirely on the phone. No account, no server, no analytics, nothing leaves 
 
 **Feature 4 - Wind-down:** five minutes of paced breathing as the last thing in the day, done lying down with the phone on your chest. A long exhale at around six breaths a minute, opened with three physiological sighs, paced by a tone that rises and falls with the breath and by vibration you can feel through a shirt. No score and nothing to beat, because it is the last thing before sleep. [`docs/WINDDOWN.md`](docs/WINDDOWN.md).
 
+**Feature 5 - Night light:** the screen's colour temperature on a curve through the day, across the whole phone rather than just this app. Neutral in the morning, warming so slowly you never catch it happening, fully warm by bedtime. A Capacitor plugin drives Android's own Night Light where it is allowed to and falls back to an overlay where it is not. [`docs/NIGHTLIGHT.md`](docs/NIGHTLIGHT.md).
+
 The home screen is a **Today** list: what is outstanding across all four features, and one button for the most urgent thing.
 
 Each section has its own palette. Kegels is teal on cool graphite, PE violet on deep plum, Bible the deep red of a Gospel book with a serif face, Wind-down indigo on near-black because it is used in an unlit room. One skeleton, four rooms.

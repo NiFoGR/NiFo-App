@@ -115,6 +115,21 @@ function blank() {
       streak: 0,
       best: 0,
     },
+
+    // The night light. App-wide rather than a section, so it has no `days` and
+    // nothing to track — only settings. It gets a slice of its own anyway
+    // because on the APK the real copy lives in the filter service's own
+    // SharedPreferences, and this is the copy that ends up in a backup.
+    nightlight: {
+      enabled: false,
+      curve: 'gradual', // 'gradual' warms all day, 'flux' drops in the evening
+      wakeAt: '07:00',
+      sleepAt: '22:00',
+      dayKelvin: 6500, // 6500K is neutral: no tint at all during the day
+      nightKelvin: 2700,
+      transitionMin: 60,
+      intensity: 1, // 0..1, weakens the tint without moving the temperatures
+    },
   };
 }
 
@@ -321,6 +336,24 @@ function hydrate(saved) {
     pray: cleanPray(saved.pray, base.pray),
     bible: cleanBible(saved.bible, base.bible),
     breathe: cleanBreathe(saved.breathe, base.breathe),
+    nightlight: cleanNightlight(saved.nightlight, base.nightlight),
+  };
+}
+
+/** The night light slice. Every value here is handed to Android as a schedule
+ *  or a colour temperature, so each is clamped to a range the filter can
+ *  actually use rather than merely to the right type. */
+function cleanNightlight(sn, base) {
+  const src = sn && typeof sn === 'object' ? sn : {};
+  return {
+    enabled: bool(src.enabled),
+    curve: oneOf(src.curve, ['gradual', 'flux'], base.curve),
+    wakeAt: timeStr(src.wakeAt, base.wakeAt),
+    sleepAt: timeStr(src.sleepAt, base.sleepAt),
+    dayKelvin: int(src.dayKelvin, 1900, 6500, base.dayKelvin),
+    nightKelvin: int(src.nightKelvin, 1900, 6500, base.nightKelvin),
+    transitionMin: int(src.transitionMin, 1, 240, base.transitionMin),
+    intensity: num(src.intensity, 0, 1) ?? base.intensity,
   };
 }
 

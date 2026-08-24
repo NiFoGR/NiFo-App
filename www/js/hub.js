@@ -12,7 +12,7 @@ import * as prayProgram from './pray/program.js';
 import * as bibleProgram from './bible/program.js';
 import * as breatheProgram from './breathe/program.js';
 import { RULES as PRAY_RULES } from './pray/prayers.js';
-import { fmtHours, fmtClock, ringSvg, escapeHtml, sparkline } from './ui.js';
+import { fmtHours, fmtDuration, ringSvg, escapeHtml, sparkline } from './ui.js';
 import { icon, logoMark } from './icons.js';
 import { kegelName, peName } from './names.js';
 import { reviewDue } from './kegels/review.js';
@@ -221,7 +221,7 @@ function todayTasks(state) {
     icon: 'breath',
     label: 'Wind-down',
     detail: wind.done
-      ? `${fmtClock(wind.ms)} breathing`
+      ? `${fmtDuration(wind.ms / 1000)} breathing`
       : `${state.breathe.settings.minutes} min · ${pattern ? pattern.short : 'paced breathing'}`,
     done: wind.done,
     href: '#/breathe/run',

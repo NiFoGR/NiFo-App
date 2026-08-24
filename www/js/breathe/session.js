@@ -23,7 +23,7 @@
 
 import * as store from '../store.js';
 import * as breathe from './program.js';
-import { fmtClock, escapeHtml } from '../ui.js';
+import { fmtClock, fmtDuration, escapeHtml } from '../ui.js';
 import { icon } from '../icons.js';
 
 // Gentle and distinguishable through a shirt: one soft pulse to breathe in,
@@ -301,7 +301,7 @@ function renderDone(mount, { ms, logged }, onExit) {
       <div class="br-done-mark">${icon('check', 30)}</div>
       <h1>Goodnight</h1>
       <p class="muted small">${logged
-        ? `${fmtClock(ms)} breathing${st > 1 ? ` · ${st} nights` : ''}`
+        ? `${fmtDuration(ms / 1000)} breathing${st > 1 ? ` · ${st} nights` : ''}`
         : 'Too short to note. No matter.'}</p>
       <button class="btn ghost" id="done">Done</button>
     </div>`;

@@ -28,11 +28,20 @@
 
 html, body {
   margin: 0;
-  background: var(--bg);
   color: var(--text);
   font: 16px/1.5 system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
   overscroll-behavior-y: none;
 }
+
+/* The background goes on body alone, deliberately.
+   Each section swaps the palette by redefining the tokens on
+   body[data-section=...], so --bg read from html still resolves to the :root
+   value. With a background on html as well, the canvas was painted the default
+   blue-grey while body painted its own darker box on top, and any screen
+   shorter than the viewport showed the difference as a lighter band across the
+   bottom. Leaving html transparent makes the canvas take body's background
+   instead, section colour and all. */
+body { background: var(--bg); }
 
 body.in-session { overflow: hidden; }
 
@@ -1051,7 +1060,12 @@ body[data-section="pe"] {
 .set-nav b { font-size: 0.95rem; font-weight: 600; }
 .set-nav i { font-style: normal; font-size: 0.76rem; color: var(--muted); }
 
-.setting select, .setting input[type="time"] { min-width: 108px; }
+/* A control is capped so it cannot grow into the label beside it. Without
+   this, one long <option> is enough to squeeze a setting's text into a
+   two-words-per-line column, which is what a night-light temperature list
+   did. */
+.setting select, .setting input[type="time"] { min-width: 108px; max-width: 50%; }
+.setting input[type="range"] { flex: 0 1 46%; min-width: 120px; accent-color: var(--accent); }
 .card .h-row + .setting { border-top: 0; }
 .card.danger .h-row .ico { color: var(--danger); }
 
@@ -1364,3 +1378,39 @@ body.blacked .br-orb { opacity: 0.09; }
   border: 1px solid var(--accent); color: var(--accent);
 }
 .breathe-done h1 { font-weight: 500; }
+
+/* ---------- night light ---------- */
+
+/* The browser's filter. In the APK this element is never used: there the
+   filter is a system overlay drawn by a service, over every app rather than
+   just this one. Here it can do the better thing, because CSS can multiply
+   where an Android window can only wash — multiply is what a colour
+   temperature actually is, and it leaves black alone. */
+#nightlight {
+  position: fixed;
+  inset: 0;
+  display: none;
+  pointer-events: none;
+  mix-blend-mode: multiply;
+  z-index: 2147483000;
+}
+
+/* The day, as a row of swatches: white, as it will look at each hour. */
+.nl-strip {
+  display: flex;
+  height: 44px;
+  border-radius: 8px;
+  overflow: hidden;
+  border: 1px solid var(--line);
+}
+.nl-strip i { flex: 1 1 0; display: block; }
+.nl-axis {
+  display: flex;
+  justify-content: space-between;
+  color: var(--muted);
+  font-size: 0.7rem;
+  margin-top: 5px;
+  font-variant-numeric: tabular-nums;
+}
+
+.nl-strip + .nl-axis { margin-bottom: 4px; }
