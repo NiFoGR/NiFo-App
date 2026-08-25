@@ -254,7 +254,7 @@ export function renderHub(mount) {
   const kStreak = store.streak();
 
   mount.innerHTML = `
-    <div class="screen">
+    <div class="screen hub">
       <header class="hub-head">
         <div class="brand-row">${logoMark(28)}<h1>NiFo</h1></div>
         <button class="icon-btn" data-nav="settings" aria-label="Settings">${icon('settings')}</button>

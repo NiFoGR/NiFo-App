@@ -1448,3 +1448,30 @@ body.blacked .br-orb { opacity: 0.09; }
   color: var(--accent);
   font-variant-numeric: tabular-nums;
 }
+
+/* ---- the hub is deliberately colourless ----
+   Colour in this app means "you are inside this section". The hub points at
+   all of them, so giving it their four accents at once made the index compete
+   with the thing it indexes - it read as four apps stacked up rather than one
+   app's front page. Neutral here, colour the moment you open something.
+
+   The tokens are still per-section underneath; the hub simply overrides them,
+   so nothing has to be special-cased in JavaScript and the section pages are
+   untouched. */
+.screen.hub .feature,
+.screen.hub .task { --tile: var(--text); }
+
+/* Pills stay quiet: at full text weight a row of them shouts louder than the
+   heading above it. */
+.screen.hub .pill { color: var(--muted); }
+.screen.hub .pill.done { color: var(--text); }
+
+.screen.hub .feature-spark { opacity: 0.42; }
+.screen.hub .task-mini i { background: var(--muted); }
+.screen.hub .ring-fill { stroke: var(--text); }
+
+/* The one call to action keeps its weight by inverting rather than by
+   colouring: near-white on the page ground. */
+.screen.hub .btn.primary { background: var(--text); color: var(--bg); }
+.screen.hub .notice.action { border-color: var(--line); }
+.screen.hub .notice.action .ico { color: var(--muted); }
