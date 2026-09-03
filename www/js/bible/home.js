@@ -133,15 +133,15 @@ export async function renderBibleSettings(mount) {
       <section class="card">
         <div class="h-row">${icon('help', 16)}<h2>About the text</h2></div>
         <p class="muted small">
-          The Orthodox Study Bible: the St. Athanasius Academy Septuagint for the
-          Old Testament, the New King James Version for the New. Parsed from a
-          copy of the book once, kept with the app.
+          The English Standard Version, on the Orthodox canon. The books the ESV
+          does not carry, and the ones it numbers differently, keep the
+          Septuagint text: the deuterocanon, Psalms, Esther, Daniel, Jeremiah,
+          Joel, Malachi and 2 Chronicles.
         </p>
         ${m ? `<div class="stat-grid">
           <div class="stat"><b>${m.books}</b><span>books</span></div>
           <div class="stat"><b>${m.chapters}</b><span>chapters</span></div>
           <div class="stat"><b>${m.verses.toLocaleString()}</b><span>verses</span></div>
-          <div class="stat"><b>${m.missing}</b><span>not recovered</span></div>
         </div>` : ''}
       </section>
 
